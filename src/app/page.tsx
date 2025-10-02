@@ -1,103 +1,144 @@
-import Image from "next/image";
+import Hero from '@/components/Hero';
+import ServiceCard from '@/components/ServiceCard';
+import TestimonialCard from '@/components/TestimonialCard';
+import { services, testimonials } from '@/data';
+import Link from 'next/link';
 
-export default function Home() {
+export default function HomePage() {
+  const featuredServices = services.slice(0, 3);
+  const featuredTestimonials = testimonials.slice(0, 3);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* Hero Section */}
+      <Hero />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Services Preview Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold text-dark-navy mb-4">
+              Our <span className="text-royal-blue">Services</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We offer comprehensive digital marketing solutions to help your business thrive in the digital landscape.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredServices.map((service, index) => (
+              <div 
+                key={service.id} 
+                className={`animate-fade-in-up ${index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : 'delay-300'}`}
+              >
+                <ServiceCard 
+                  service={service} 
+                  featured={index === 1}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center animate-fade-in-up delay-400">
+            <Link
+              href="/services"
+              className="inline-flex items-center bg-royal-blue text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+            >
+              View All Services
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-royal-blue">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center text-white animate-fade-in-up delay-100">
+              <div className="text-4xl md:text-5xl font-bold text-accent-yellow mb-2">500+</div>
+              <div className="text-lg">Projects Completed</div>
+            </div>
+            <div className="text-center text-white animate-fade-in-up delay-200">
+              <div className="text-4xl md:text-5xl font-bold text-accent-yellow mb-2">98%</div>
+              <div className="text-lg">Client Satisfaction</div>
+            </div>
+            <div className="text-center text-white animate-fade-in-up delay-300">
+              <div className="text-4xl md:text-5xl font-bold text-accent-yellow mb-2">50+</div>
+              <div className="text-lg">Team Members</div>
+            </div>
+            <div className="text-center text-white animate-fade-in-up delay-400">
+              <div className="text-4xl md:text-5xl font-bold text-accent-yellow mb-2">5</div>
+              <div className="text-lg">Years Experience</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl font-bold text-dark-navy mb-4">
+              What Our <span className="text-royal-blue">Clients Say</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Don't just take our word for it. See what our satisfied clients have to say about our services.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredTestimonials.map((testimonial, index) => (
+              <div 
+                key={testimonial.id} 
+                className={`animate-fade-in-up ${index === 0 ? 'delay-100' : index === 1 ? 'delay-200' : 'delay-300'}`}
+              >
+                <TestimonialCard testimonial={testimonial} />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center animate-fade-in-up delay-400">
+            <Link
+              href="/testimonials"
+              className="inline-flex items-center border-2 border-royal-blue text-royal-blue px-8 py-4 rounded-lg text-lg font-semibold hover:bg-royal-blue hover:text-white transition-colors duration-300"
+            >
+              Read More Reviews
+              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-dark-navy to-royal-blue">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 animate-fade-in">
+            Ready to Transform Your Business?
+          </h2>
+          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto animate-fade-in delay-100">
+            Let's discuss how we can help you achieve your digital marketing goals and grow your business online.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+            <Link
+              href="/contact"
+              className="bg-accent-yellow text-dark-navy px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-300 transition-colors duration-300 transform hover:scale-105"
+            >
+              Get Free Consultation
+            </Link>
+            <Link
+              href="/portfolio"
+              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-dark-navy transition-colors duration-300 transform hover:scale-105"
+            >
+              View Our Work
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
